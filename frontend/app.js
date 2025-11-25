@@ -1,5 +1,6 @@
 // Connect to Socket.IO server
-const socket = io('http://localhost:3000');
+// Use the same origin as the page (works whether local or remote)
+const socket = io(window.location.origin);
 
 // DOM Elements
 const statusIndicator = document.getElementById('statusIndicator');
