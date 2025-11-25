@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iRacing Telemetry Overlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="overlay-container">
+        <!-- Header -->
+        <header class="overlay-header">
+            <div class="header-branding">
+                <img src="gearbox-logo.png" alt="Gearbox Logo" class="logo">
+                <h1>Gearbox Live Telemetry</h1>
+            </div>
+            <div class="connection-status">
+                <span class="status-indicator" id="statusIndicator"></span>
+                <span id="statusText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Live Lap Times -->
+        <section class="lap-times-section">
+            <h2>Recent Laps</h2>
+            <div class="lap-times-container" id="lapTimesContainer">
+                <div class="no-data">Waiting for telemetry data...</div>
+            </div>
+        </section>
+
+        <!-- Best Lap -->
+        <section class="best-lap-section">
+            <h2>Session Best</h2>
+            <div class="best-lap" id="bestLap">
+                <div class="no-data">No laps recorded yet</div>
+            </div>
+        </section>
+
+        <!-- Connected Drivers -->
+        <section class="drivers-section">
+            <h2>Connected Drivers</h2>
+            <div class="drivers-list" id="driversList">
+                <div class="no-data">No drivers connected</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
