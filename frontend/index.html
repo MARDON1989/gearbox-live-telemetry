@@ -4,50 +4,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iRacing Telemetry Overlay</title>
+    <title>MTEL - Mardon Telemetry Enhanced</title>
+    <meta name="description"
+        content="Advanced iRacing telemetry dashboard with real-time data and historical analytics">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="overlay-container">
+    <div class="app-container">
         <!-- Header -->
-        <header class="overlay-header">
+        <header class="app-header">
             <div class="header-branding">
-                <img src="gearbox-logo.png" alt="Gearbox Logo" class="logo">
-                <h1>Gearbox Live Telemetry</h1>
+                <img src="mardon-logo.png" alt="MARDON PC Logo" class="app-logo">
+                <div>
+                    <h1 class="app-title">MTEL</h1>
+                    <p class="app-subtitle">MARDON Enhanced Telemetry</p>
+                </div>
             </div>
-            <div class="connection-status">
+            <div class="unit-toggle">
+                <button class="unit-toggle-btn" id="unitToggleBtn" title="Toggle between Imperial and Metric units">
+                    <span class="unit-label imperial" id="imperialLabel">Imperial</span>
+                    <span class="unit-label metric" id="metricLabel">Metric</span>
+                </button>
+            </div>
+            <div class="chipper-branding">
+                <span class="powered-by">Powered by:</span>
+                <img src="assets/chipper_logo.png" alt="Chipper Chassis Logo" class="chipper-logo">
+            </div>
+            <div class="connection-status" id="connectionStatus">
                 <span class="status-indicator" id="statusIndicator"></span>
-                <span id="statusText">Connecting...</span>
+                <span class="status-text" id="statusText">Connecting...</span>
+            </div>
+            <a href="#" onclick="openHistory(); return false;" class="export-btn"
+                style="text-decoration: none; margin-right: 0.5rem;">
+                📊 View History
+            </a>
+            <a href="#" onclick="openButtonBox(); return false;" class="export-btn"
+                style="text-decoration: none; margin-right: 1rem;">
+                🎮 Button Box
+            </a>
+
+            <!-- Window Controls (Desktop App Only) -->
+            <div class="window-controls" id="windowControls" style="display: none;">
+                <button class="control-btn" id="lockOverlayBtn" title="Lock Overlay (Click-Through)">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                    </svg>
+                </button>
+                <button class="control-btn" id="overlayBtn" title="Toggle Overlay Mode">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path
+                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-2h-2v2zm0-4h2V7h-2v6z" />
+                    </svg>
+                </button>
+                <button class="control-btn" id="minBtn" title="Minimize">─</button>
+                <button class="control-btn" id="maxBtn" title="Maximize">□</button>
+                <button class="control-btn close" id="closeBtn" title="Close">✕</button>
             </div>
         </header>
 
-        <!-- Live Lap Times -->
-        <section class="lap-times-section">
-            <h2>Recent Laps</h2>
-            <div class="lap-times-container" id="lapTimesContainer">
-                <div class="no-data">Waiting for telemetry data...</div>
+        <!-- Context Menu -->
+        <div id="cardContextMenu" class="context-menu">
+            <div class="context-menu-header">Manage Cards</div>
+            <div id="contextMenuList">
+                <!-- Populated by JS -->
             </div>
-        </section>
+        </div>
 
-        <!-- Best Lap -->
-        <section class="best-lap-section">
-            <h2>Session Best</h2>
-            <div class="best-lap" id="bestLap">
-                <div class="no-data">No laps recorded yet</div>
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid" id="dashboardGrid">
+            <!-- Conditions Card -->
+            <div class="card draggable resizable" data-card-id="conditions" style="grid-column: span 3;">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Track Conditions</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="flex gap-4" style="justify-content: space-around;">
+                        <div class="metric">
+                            <span class="metric-label">Weather</span>
+                            <span class="metric-value" id="weatherType" style="font-size: 1rem;">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Air Temp</span>
+                            <span class="metric-value" id="airTemp">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Track Temp</span>
+                            <span class="metric-value" id="trackTemp">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Wind</span>
+                            <div class="flex align-center gap-1">
+                                <span class="metric-value" id="windSpeed">--</span>
+                                <span id="windDirArrow" style="font-size: 1.25rem; display: inline-block;">↑</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
             </div>
-        </section>
 
-        <!-- Connected Drivers -->
-        <section class="drivers-section">
-            <h2>Connected Drivers</h2>
-            <div class="drivers-list" id="driversList">
-                <div class="no-data">No drivers connected</div>
+            <!-- Live Session Card -->
+            <div class="card draggable resizable" data-card-id="live-session">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Live Session</h2>
+                    <span class="card-badge" id="sessionBadge">No Active Session</span>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="metric">
+                        <span class="metric-label">Track</span>
+                        <span class="metric-value" id="trackName" style="font-size: 1.25rem;">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Car</span>
+                        <span class="metric-value" id="carName" style="font-size: 1.25rem;">--</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Driver</span>
+                        <span class="metric-value" id="driverName" style="font-size: 1.25rem;">--</span>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
             </div>
-        </section>
+
+            <!-- Gearbox Card -->
+            <div class="card draggable resizable" data-card-id="gearbox">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Gearbox</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <!-- RPM LEDs at top -->
+                    <div class="rpm-led-container" style="margin-bottom: 1rem;">
+                        <div class="rpm-led" data-threshold="0"></div>
+                        <div class="rpm-led" data-threshold="10"></div>
+                        <div class="rpm-led" data-threshold="20"></div>
+                        <div class="rpm-led" data-threshold="30"></div>
+                        <div class="rpm-led" data-threshold="40"></div>
+                        <div class="rpm-led" data-threshold="50"></div>
+                        <div class="rpm-led" data-threshold="60"></div>
+                        <div class="rpm-led rpm-led-yellow" data-threshold="70"></div>
+                        <div class="rpm-led rpm-led-yellow" data-threshold="80"></div>
+                        <div class="rpm-led rpm-led-red" data-threshold="90"></div>
+                        <div class="rpm-led rpm-led-red" data-threshold="95"></div>
+                    </div>
+                    <!-- Telemetry below -->
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 0.5rem;">
+                        <div class="metric">
+                            <span class="metric-label">Speed</span>
+                            <span class="metric-value large" id="speed">---</span>
+                        </div>
+                        <div class="metric" style="text-align: center;">
+                            <span class="metric-label">Gear</span>
+                            <span class="metric-value large" id="gear">-</span>
+                        </div>
+                        <div class="metric" style="text-align: right;">
+                            <span class="metric-label">RPM</span>
+                            <span class="metric-value large" id="rpmValue">----</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Race Control Card -->
+            <div class="card draggable resizable" data-card-id="race-control">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Race Control</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="race-control-grid">
+                        <div class="metric">
+                            <span class="metric-label">Current Lap</span>
+                            <span class="metric-value" id="raceControlLap">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Laps to Go</span>
+                            <span class="metric-value" id="lapsToGo">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Flag</span>
+                            <div id="flagIndicator" class="flag-indicator">
+                                <span id="flagText">GREEN</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Lap Times Card -->
+            <div class="card draggable resizable" data-card-id="lap-times">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Lap Times</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="metric">
+                        <span class="metric-label">Current Lap</span>
+                        <span class="metric-value large" id="lapTimesCurrentLap">--:--.---</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Lap</span>
+                        <span class="metric-value" id="lapTimesLastLap">--:--.---</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Best Lap</span>
+                        <span class="metric-value success" id="lapTimesBestLap">--:--.---</span>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+        </div>
+
+        <!-- Driving Controls Card -->
+        <div class="card draggable resizable" data-card-id="driving-controls">
+            <div class="card-header drag-handle">
+                <h2 class="card-title">Driving Controls</h2>
+                <button class="card-close-btn" title="Close Card">✕</button>
+            </div>
+            <div class="card-content">
+                <div class="control-input">
+                    <span class="control-label">Throttle</span>
+                    <div class="control-bar-container">
+                        <div class="control-bar control-bar-throttle" id="throttleBar"></div>
+                    </div>
+                    <span class="control-value" id="throttleValue">0%</span>
+                </div>
+                <div class="control-input">
+                    <span class="control-label">Brake</span>
+                    <div class="control-bar-container">
+                        <div class="control-bar control-bar-brake" id="brakeBar"></div>
+                    </div>
+                    <span class="control-value" id="brakeValue">0%</span>
+                </div>
+                <div class="control-input">
+                    <span class="control-label">Clutch</span>
+                    <div class="control-bar-container">
+                        <div class="control-bar control-bar-clutch" id="clutchBar"></div>
+                    </div>
+                    <span class="control-value" id="clutchValue">0%</span>
+                </div>
+                <div class="control-input">
+                    <span class="control-label">Steering</span>
+                    <div class="steering-indicator">
+                        <div class="steering-center"></div>
+                        <div class="steering-pointer" id="steeringPointer"></div>
+                    </div>
+                    <span class="control-value" id="steeringValue">0°</span>
+                </div>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+        <!-- Track Map Card -->
+        <div class="card draggable resizable" data-card-id="track-map">
+            <div class="card-header drag-handle">
+                <h2 class="card-title">Track Map</h2>
+                <button class="card-close-btn" title="Close Card">✕</button>
+            </div>
+            <div class="card-content">
+                <svg id="trackMapSvg" viewBox="0 0 200 200" style="width: 100%; height: 200px;">
+                    <!-- Track circle -->
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="var(--border-color)" stroke-width="3" />
+                    <!-- Start/Finish line -->
+                    <line x1="100" y1="15" x2="100" y2="25" stroke="var(--text-primary)" stroke-width="2" />
+                    <!-- Car markers will be added dynamically -->
+                    <g id="carMarkers"></g>
+                </svg>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+        <!-- Pit Information Card -->
+        <div class="card draggable resizable" data-card-id="pit-info">
+            <div class="card-header drag-handle">
+                <h2 class="card-title">Pit Information</h2>
+                <div class="toggle-group">
+                    <button class="toggle-btn active" id="pitAllBtn">All</button>
+                    <button class="toggle-btn" id="pitRelBtn">Relative</button>
+                </div>
+                <button class="card-close-btn" title="Close Card">✕</button>
+            </div>
+            <div class="card-content">
+                <div class="pit-info-container" id="pitInfoContainer">
+                    <div class="no-data">No pit stop data available</div>
+                </div>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+        <!-- Secondary Grid -->
+        <div class="dashboard-grid" id="secondaryGrid">
+            <!-- Fuel Management Card -->
+            <div class="card draggable resizable" data-card-id="fuel-management">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Fuel Management</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="fuel-bar-container">
+                        <div class="fuel-bar-fill" id="fuelFill" style="width: 0%;"></div>
+                        <span class="fuel-bar-text" id="fuelPercentage">0%</span>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">Current</span>
+                            <span class="metric-value" id="fuelLevel">--</span>
+                        </div>
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">Laps Left</span>
+                            <span class="metric-value" id="lapsRemaining">--</span>
+                        </div>
+                    </div>
+                    <div class="metric mt-1">
+                        <span class="metric-label">Avg Per Lap</span>
+                        <span class="metric-value" id="avgFuelPerLap" style="font-size: 1.25rem;">--</span>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Tire Monitor Card -->
+            <div class="card draggable resizable" data-card-id="tire-monitor">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Tire Monitor</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="tire-grid">
+                        <!-- Left Front -->
+                        <div class="tire-box" id="tireLF">
+                            <div class="tire-label">LF</div>
+                            <div class="tire-data">
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Pressure</span>
+                                    <span class="tire-metric-value" id="tireLFPressure">--</span>
+                                </div>
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Temp</span>
+                                    <span class="tire-metric-value" id="tireLFTemp">--</span>
+                                </div>
+                                <div class="tire-wear-bar">
+                                    <div class="tire-wear-fill" id="tireLFWear"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Front -->
+                        <div class="tire-box" id="tireRF">
+                            <div class="tire-label">RF</div>
+                            <div class="tire-data">
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Pressure</span>
+                                    <span class="tire-metric-value" id="tireRFPressure">--</span>
+                                </div>
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Temp</span>
+                                    <span class="tire-metric-value" id="tireRFTemp">--</span>
+                                </div>
+                                <div class="tire-wear-bar">
+                                    <div class="tire-wear-fill" id="tireRFWear"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Left Rear -->
+                        <div class="tire-box" id="tireLR">
+                            <div class="tire-label">LR</div>
+                            <div class="tire-data">
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Pressure</span>
+                                    <span class="tire-metric-value" id="tireLRPressure">--</span>
+                                </div>
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Temp</span>
+                                    <span class="tire-metric-value" id="tireLRTemp">--</span>
+                                </div>
+                                <div class="tire-wear-bar">
+                                    <div class="tire-wear-fill" id="tireLRWear"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Rear -->
+                        <div class="tire-box" id="tireRR">
+                            <div class="tire-label">RR</div>
+                            <div class="tire-data">
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Pressure</span>
+                                    <span class="tire-metric-value" id="tireRRPressure">--</span>
+                                </div>
+                                <div class="tire-metric">
+                                    <span class="tire-metric-label">Temp</span>
+                                    <span class="tire-metric-value" id="tireRRTemp">--</span>
+                                </div>
+                                <div class="tire-wear-bar">
+                                    <div class="tire-wear-fill" id="tireRRWear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Race Position Card -->
+            <div class="card draggable resizable" data-card-id="race-position">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Race Position</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div class="flex gap-2">
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">Overall</span>
+                            <span class="metric-value large" id="position">--</span>
+                        </div>
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">In Class</span>
+                            <span class="metric-value large" id="classPosition">--</span>
+                        </div>
+                    </div>
+                    <div class="metric mt-2">
+                        <span class="metric-label">Gap to Leader</span>
+                        <span class="metric-value" id="gapToLeader" style="font-size: 1.25rem;">--</span>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">Gap Ahead</span>
+                            <span class="metric-value" id="gapToAhead" style="font-size: 1.25rem;">--</span>
+                        </div>
+                        <div class="metric" style="flex: 1;">
+                            <span class="metric-label">Gap Behind</span>
+                            <span class="metric-value" id="gapToBehind" style="font-size: 1.25rem;">--</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Standings Card -->
+            <div class="card draggable resizable" data-card-id="standings">
+                <div class="card-header drag-handle">
+                    <div class="flex" style="justify-content: space-between; align-items: center; width: 100%;">
+                        <h2 class="card-title">Standings</h2>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" id="standingsAllBtn">All</button>
+                            <button class="toggle-btn" id="standingsRelBtn">Relative</button>
+                        </div>
+                        <button class="card-close-btn" title="Close Card" style="margin-left: 8px;">✕</button>
+                    </div>
+                </div>
+                <div class="card-content" style="overflow-y: auto; max-height: 300px;">
+                    <table class="standings-table">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>#</th>
+                                <th>Driver</th>
+                                <th>Last</th>
+                                <th>Best</th>
+                                <th>Gap</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standingsBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+            <!-- Last 5 Laps Card -->
+            <div class="card draggable resizable" data-card-id="last-5-laps">
+                <div class="card-header drag-handle">
+                    <h2 class="card-title">Last 5 Laps</h2>
+                    <button class="card-close-btn" title="Close Card">✕</button>
+                </div>
+                <div class="card-content">
+                    <div id="last5Laps" class="flex flex-col gap-1">
+                        <div class="no-data">No laps completed yet</div>
+                    </div>
+                </div>
+                <div class="resize-handle"></div>
+            </div>
+
+
+        </div>
     </div>
 
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.75rem;">
+        <button id="updateBtn"
+            style="background: none; border: none; color: inherit; cursor: pointer; text-decoration: underline;">Check
+            for Updates</button>
+        <span id="updateStatus" style="margin-left: 0.5rem;"></span>
+    </footer>
+
+    <!-- Socket.IO Client -->
     <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Unit Conversion Utilities -->
+    <script src="units.js"></script>
+
+    <!-- Main Application -->
     <script src="app.js"></script>
 </body>
 

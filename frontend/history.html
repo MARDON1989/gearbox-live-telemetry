@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTEL - Session History</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .history-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            height: calc(100vh - 120px);
+            padding: 1.5rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .session-list {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .session-filters {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .session-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .session-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .session-item.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .session-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .session-track {
+            font-weight: 600;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .session-car {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .session-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .session-detail {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-header h2 {
+            font-size: 1.75rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .detail-header p {
+            margin: 0;
+        }
+
+        .export-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .export-btn:hover {
+            background: #00dd77;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .metric {
+            background: var(--bg-glass);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .metric-value.success {
+            color: var(--accent-primary);
+        }
+
+        .lap-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .lap-table th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--bg-glass);
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .lap-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lap-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .lap-table tr.best-lap {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .lap-table tr.invalid-lap {
+            opacity: 0.5;
+        }
+
+        .chart-container {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-glass);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-container h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .no-selection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- MTEL Header -->
+    <header class="app-header">
+        <div class="header-branding">
+            <img src="mardon-logo.png" alt="MARDON PC Logo" class="app-logo">
+            <div>
+                <h1 class="app-title">MTEL Historical Data</h1>
+                <p class="app-subtitle">Session Analysis & Telemetry Review</p>
+            </div>
+        </div>
+        <a href="index.html" class="export-btn" style="text-decoration: none;">
+            ← Back to Live View
+        </a>
+    </header>
+
+    <div class="history-container">
+        <!-- Session List Sidebar -->
+        <div class="session-list">
+            <h2 style="margin-bottom: 1rem;">Session History</h2>
+
+            <div class="session-filters">
+                <input type="text" id="filterDriver" class="filter-input" placeholder="Filter by driver...">
+                <input type="text" id="filterTrack" class="filter-input" placeholder="Filter by track...">
+                <input type="text" id="filterCar" class="filter-input" placeholder="Filter by car...">
+                <input type="date" id="filterStartDate" class="filter-input">
+                <input type="date" id="filterEndDate" class="filter-input">
+            </div>
+
+            <div id="sessionListContainer"></div>
+        </div>
+
+        <!-- Session Detail Panel -->
+        <div class="session-detail">
+            <div id="sessionDetailContainer" class="no-selection">
+                Select a session to view details
+            </div>
+        </div>
+    </div>
+
+    <script src="history.js"></script>
+</body>
+
+</html>

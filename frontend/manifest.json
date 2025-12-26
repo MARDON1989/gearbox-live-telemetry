@@ -1,0 +1,35 @@
+{
+    "name": "MTEL Button Box",
+    "short_name": "MTEL",
+    "description": "Mardon Telemetry Enhanced - iRacing Button Box and Telemetry",
+    "start_url": "/buttonbox.html",
+    "display": "standalone",
+    "background_color": "#0a0a0f",
+    "theme_color": "#00ff88",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/mardon-logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/mardon-logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "games",
+        "utilities"
+    ],
+    "screenshots": [
+        {
+            "src": "/mardon-logo.png",
+            "sizes": "540x720",
+            "type": "image/png"
+        }
+    ]
+}

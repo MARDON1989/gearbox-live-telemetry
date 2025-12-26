@@ -1,8 +1,25 @@
-node_modules/
 *.log
 .env
 .DS_Store
-*.pyc
 __pycache__/
+*.pyc
+*.pyo
+*.db
+*.db-journal
+Thumbs.db
+dist/
+build/
+*.egg-info/
 .vscode/
 .idea/
+desktop/out/
+
+# Bundled runtimes (NOT USED - switched to pre-bundled dependencies)
+nodejs/
+nodejs.zip
+node-v*-win-x64/
+python/
+python.zip
+
+# NOTE: node_modules/ is now INCLUDED in git for pre-bundled installer
+# NOTE: agent/lib/ will be INCLUDED in git for pre-bundled Python packages

@@ -1,0 +1,40 @@
+{
+    "name": "mtel-desktop",
+    "version": "2.0.0",
+    "description": "MTEL Desktop - Windows application for Mardon Telemetry",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder",
+        "build:win": "electron-builder --win"
+    },
+    "keywords": [
+        "iracing",
+        "telemetry",
+        "desktop",
+        "racing"
+    ],
+    "author": "MARDON",
+    "license": "MIT",
+    "dependencies": {
+        "electron": "^28.0.0",
+        "electron-store": "^8.1.0"
+    },
+    "devDependencies": {
+        "electron-builder": "^24.9.1"
+    },
+    "build": {
+        "appId": "com.mardon.mtel",
+        "productName": "MTEL",
+        "win": {
+            "target": [
+                "nsis"
+            ],
+            "icon": "icon.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        }
+    }
+}

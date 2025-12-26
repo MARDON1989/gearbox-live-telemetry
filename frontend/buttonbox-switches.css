@@ -1,0 +1,810 @@
+/* Button Box Switches and Styling */
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: #0a0a0f;
+    user-select: none;
+}
+
+.buttonbox-container {
+    padding: 1rem;
+    min-height: calc(100vh - 80px);
+}
+
+.button-grid {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    background:
+        linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+        linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+        linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+        linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+        linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+        linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px;
+    border-radius: 12px;
+    border: 2px solid #333;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Save and Edit Buttons */
+.save-layout-btn,
+.edit-mode-toggle {
+    padding: 0.5rem 1rem;
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.edit-mode-toggle.active {
+    background: #ff3366;
+}
+
+/* Control Button Base */
+.control-button {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    touch-action: none;
+    /* Allow content to overflow and be visible */
+    overflow: visible !important;
+    /* Ensure switches can size themselves */
+    width: auto;
+    height: auto;
+}
+
+.control-button.edit-mode {
+    cursor: move;
+    outline: 2px dashed var(--accent-primary);
+    /* Ensure outline doesn't clip content */
+    outline-offset: 4px;
+}
+
+.control-button.edit-mode::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    cursor: nwse-resize;
+}
+
+/* Pro-Mode Toggle Switch with Guard (Engine On/Off) */
+.toggle-guard {
+    position: relative;
+    width: 120px;
+    height: 140px;
+    z-index: 1;
+}
+
+.toggle-guard-cover {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 70px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 10px 10px 0 0;
+    border: 2px solid #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s;
+    transform-origin: bottom center;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.toggle-guard-cover.open {
+    transform: translateX(-50%) rotateX(-120deg);
+}
+
+.toggle-switch-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 3px solid #444;
+    border-radius: 8px;
+    transition: 0.3s;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 30px;
+    width: 50px;
+    left: 2px;
+    bottom: 2px;
+    background: linear-gradient(145deg, #ff3366, #cc0033);
+    border-radius: 4px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+input:checked+.toggle-slider {
+    background: linear-gradient(145deg, #00ff88, #00dd66);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+input:checked+.toggle-slider:before {
+    transform: translateY(-44px);
+    background: linear-gradient(145deg, #ffffff, #cccccc);
+}
+
+/* Professional Toggle Switch with Guard (from CodePen) */
+.toggle-switch-wrapper {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #202020;
+    border-radius: 10px;
+    outline: 3px solid #a1a1a1;
+    background: repeating-linear-gradient(-45deg,
+            #f5dd00,
+            #f5dd00 12px,
+            #101010 10px,
+            #101010 23px);
+    width: 100%;
+    height: 100%;
+    min-width: 70px;
+    min-height: 140px;
+}
+
+.toggle-switch {
+    border-radius: 5px;
+    border: 2px solid #202020;
+    outline: 2px solid #a1a1a1;
+    background: #404040;
+    outline-offset: 0px;
+    padding: 3px;
+    margin: 0;
+    perspective: 300px;
+    box-shadow: 0 0 1px #050506, inset 0 0 0 2px #050506, inset 0 3px 1px #66646c;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-switch:before {
+    content: "";
+    position: absolute;
+    right: 1px;
+    top: 10px;
+    height: 20px;
+    width: 2px;
+    border-top-right-radius: 3px;
+    background-color: #a3a3a3;
+    z-index: 1;
+}
+
+.toggle-switch:after {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: 10px;
+    height: 20px;
+    width: 2px;
+    border-top-left-radius: 3px;
+    background-color: #a3a3a3;
+}
+
+.toggle-switch .guard {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    display: block;
+    width: 80%;
+    height: 70%;
+    border-radius: 7px;
+    background: linear-gradient(0deg,
+            rgba(166, 46, 41, 1) 0%,
+            rgba(210, 47, 41, 1) 6%,
+            rgba(237, 71, 65, 1) 16%,
+            rgba(237, 71, 65, 1) 27%,
+            rgba(210, 47, 41, 1) 68%,
+            rgba(210, 47, 41, 1) 100%);
+    box-shadow:
+        inset -2px -2px 3px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 3px rgba(255, 255, 255, 0.5);
+    cursor: grab;
+    transform-origin: 50% 0%;
+    transition: transform 0.2s ease;
+    perspective: 500px;
+    filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 1));
+    border: 1px solid black;
+    z-index: 3;
+}
+
+.toggle-switch .guard:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: calc(100% - 20%);
+    position: absolute;
+    top: 20%;
+    opacity: 0.6;
+    background: linear-gradient(0deg, rgba(110, 29, 25, 1) 0%, rgba(173, 46, 41, 1) 4%, rgba(210, 47, 41, 1) 11%, rgba(237, 71, 65, 1) 21%, rgba(242, 107, 102, 1) 32%, rgba(237, 71, 65, 1) 41%, rgba(237, 71, 65, 1) 41%, rgba(210, 47, 41, 1) 63%, rgba(210, 47, 41, 1) 100%);
+    border-radius: 7px;
+}
+
+.toggle-switch .guard:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 10%;
+    background-color: #303030;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 3px ridge #656565;
+    top: -2%;
+}
+
+.toggle-switch .guard:checked {
+    background: rgba(237, 71, 65, 1);
+    transform: rotateX(70deg);
+    filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 1));
+    background: linear-gradient(180deg,
+            rgba(166, 46, 41, 1) 4%,
+            rgba(210, 47, 41, 1) 38%,
+            rgba(237, 71, 65, 1) 59%,
+            rgba(242, 113, 108, 1) 71%,
+            rgba(242, 113, 108, 1) 94%,
+            rgba(210, 47, 41, 1) 100%);
+    z-index: 3;
+}
+
+.toggle-switch .guard:checked+.guard-sides {
+    transform: translateY(0px);
+}
+
+.toggle-switch .guard-sides {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 70%;
+    display: block;
+    transform: translateY(32%);
+    transition: all 0.2s ease;
+}
+
+.toggle-switch .guard-sides:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 3%;
+    top: 15%;
+    width: 12%;
+    height: 40%;
+    background-color: red;
+    border-radius: 0px;
+    background: linear-gradient(0deg,
+            rgba(166, 46, 41, 1) 0%,
+            rgba(210, 47, 41, 1) 6%,
+            rgba(237, 71, 65, 1) 16%,
+            rgba(237, 71, 65, 1) 27%,
+            rgba(210, 47, 41, 1) 68%,
+            rgba(210, 47, 41, 1) 100%);
+    box-shadow:
+        inset -2px -2px 3px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 1px rgba(255, 255, 255, 0.2),
+        0px 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-switch .guard-sides:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 3%;
+    top: 15%;
+    width: 12%;
+    height: 40%;
+    background-color: red;
+    border-radius: 0px;
+    background: linear-gradient(0deg,
+            rgba(166, 46, 41, 1) 0%,
+            rgba(210, 47, 41, 1) 6%,
+            rgba(237, 71, 65, 1) 16%,
+            rgba(237, 71, 65, 1) 27%,
+            rgba(210, 47, 41, 1) 68%,
+            rgba(210, 47, 41, 1) 100%);
+    box-shadow:
+        inset -2px -2px 3px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 1px rgba(255, 255, 255, 0.2),
+        0px 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-switch .switch {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    appearance: none;
+    display: block;
+    user-select: none;
+    background: #a1a1a1;
+    background: linear-gradient(to left, #a1a1a1 0%, #a1a1a1 1%, #c0c0c0 26%, #b1b1b1 48%, #909090 75%, #a1a1a1 100%);
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    width: 74%;
+    height: 36%;
+    clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+    z-index: 0;
+    cursor: pointer;
+    filter: drop-shadow(1px 1px 3px rgba(255, 255, 255, 1));
+}
+
+.toggle-switch .switch:before {
+    content: "\2B22";
+    display: block;
+    font-size: 3.5em;
+    position: absolute;
+    transform: rotate(90deg);
+    color: transparent;
+    text-shadow:
+        -1px 1px 1px rgba(255, 255, 255, 0.3),
+        1px 1px 0.5px rgba(0, 0, 0, 0.4),
+        -1px -1px 1px rgba(255, 255, 255, 1),
+        -2px 0px 0px rgba(0, 0, 0, 1),
+        -2px -2px 0px rgba(0, 0, 0, 1),
+        1px -1px 0px rgba(0, 0, 0, 1);
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 1),
+        inset -1px -1px 1px rgba(0, 0, 0, 0.5);
+    top: -24%;
+    left: 10%;
+}
+
+.toggle-switch .switch:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: #000;
+    border-radius: 100%;
+    width: 29%;
+    height: 30%;
+    text-indent: -0.22em;
+    line-height: 0.7em;
+    opacity: 0.8;
+    border: 4px double #726e6e;
+    box-shadow:
+        2px 2px 2px rgba(255, 255, 255, 0.5),
+        -2px -2px 2px rgba(255, 255, 255, 0.5);
+}
+
+.toggle-switch .knob {
+    position: absolute;
+    display: block;
+    width: 17%;
+    height: 18%;
+    bottom: 11%;
+    left: 50%;
+    pointer-events: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    /* Default: knob down (OFF) */
+    transform: translateX(-50%) rotateX(0deg);
+    background: linear-gradient(to left, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%);
+    border: 1px solid #000;
+    z-index: 2;
+    transition: all 0.2s ease;
+    box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 1),
+        inset 0px 3px 3px rgba(0, 0, 0, 0.7);
+}
+
+.toggle-switch .knob:after {
+    content: "";
+    position: absolute;
+    bottom: -70%;
+    left: -17%;
+    width: 100%;
+    border-radius: 50%;
+    height: 110%;
+    border: 1px solid black;
+    border-top: 0;
+    background: -webkit-radial-gradient(50% -70%, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, #a1a1a1 63%, #e6e6e6 87%, rgba(38, 38, 38, 1));
+}
+
+/* When checked: knob flips up (ON) */
+.toggle-switch .switch:checked+.knob {
+    transform: translateX(-50%) translateY(-10%) rotateX(-175deg);
+    bottom: 9%;
+}
+
+.toggle-switch .switch:checked+.knob:after {
+    background: -webkit-radial-gradient(50% -40%, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, #a1a1a1 63%, #e6e6e6 87%, rgba(38, 38, 38, 1));
+    height: 110%;
+    bottom: -70%;
+}
+
+.toggle-switch .switch:checked~.light {
+    background: #ed4741;
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 1);
+}
+
+.toggle-switch .switch:checked~.light:after {
+    opacity: 0.3;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 1);
+}
+
+.toggle-switch .switch:checked~.light:before {
+    opacity: 1;
+}
+
+.toggle-switch .light {
+    position: absolute;
+    bottom: -29%;
+    display: block;
+    width: 71%;
+    height: 14%;
+    left: 50%;
+    padding: 2px;
+    transform: translateX(-50%);
+    background-color: grey;
+    border-radius: 7px;
+    border: 2px ridge black;
+    z-index: 0;
+    transition: all 0.4s ease;
+}
+
+.toggle-switch .light:before {
+    opacity: 0;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    mix-blend-mode: overlay;
+    background: radial-gradient(at center, #F6D656, #EC3D3D);
+    transition: all 1s ease;
+}
+
+.toggle-switch .light:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    opacity: 0.2;
+    background-image: radial-gradient(#ffffff50 2px, transparent 0);
+    background-size: 5px 5px;
+    background-position: -18px -15px;
+    z-index: 1;
+    border-radius: 7px;
+    outline: 2px solid #a1a1a1;
+    border: 1px solid #00000050;
+    transition: all 1s ease;
+}
+
+/* Rocker Switch (Headlights) */
+.rocker-switch {
+    position: relative;
+    width: 100px;
+    height: 60px;
+}
+
+.rocker-switch input {
+    display: none;
+}
+
+.rocker-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 3px solid #444;
+    border-radius: 30px;
+    transition: 0.3s;
+    overflow: hidden;
+}
+
+.rocker-slider:before {
+    position: absolute;
+    content: "";
+    height: 50px;
+    width: 50px;
+    left: 2px;
+    bottom: 2px;
+    background: linear-gradient(145deg, #666, #444);
+    border-radius: 50%;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+input:checked+.rocker-slider {
+    background: linear-gradient(145deg, #ffaa00, #ff8800);
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.6);
+}
+
+input:checked+.rocker-slider:before {
+    transform: translateX(40px);
+    background: linear-gradient(145deg, #ffdd00, #ffaa00);
+}
+
+/* Engine Start Button */
+.start-button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.start-button-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 4px solid #444;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.start-button-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #00ff88, #00dd66);
+    border: 3px solid #00aa55;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.start-button-inner:active {
+    transform: translate(-50%, -50%) scale(0.95);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.8), inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.start-button-inner.pressed {
+    background: linear-gradient(145deg, #00dd66, #00aa55);
+    box-shadow: 0 0 40px rgba(0, 255, 136, 1), inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Momentary Push Button (PTT, Brake Bias, Fuel) */
+.push-button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.push-button-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 3px solid #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.push-button-top {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff3366, #cc0033);
+    border: 2px solid #ff0044;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.push-button-top:active,
+.push-button-top.pressed {
+    transform: translateY(3%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* PTT Button (Green) */
+.push-button.ptt .push-button-top {
+    background: linear-gradient(145deg, #00ff88, #00dd66);
+    border-color: #00ff88;
+    color: #000;
+}
+
+/* Standard Button - Now Round */
+.standard-button {
+    width: 100%;
+    height: 100%;
+    min-width: 60px;
+    min-height: 60px;
+    background: linear-gradient(145deg, #3a3a4a, #2a2a3a);
+    border: 2px solid #555;
+    border-radius: 50%;
+    /* Make round */
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.1s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    word-wrap: break-word;
+}
+
+.standard-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Button Labels */
+.button-label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+    font-weight: 600;
+}
+
+.button-keybind {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    text-align: center;
+}
+
+/* Mobile and Tablet Optimization */
+@media (max-width: 1024px) {
+    .buttonbox-container {
+        padding: 0.5rem;
+    }
+
+    .button-grid {
+        min-height: calc(100vh - 120px);
+    }
+
+    /* Scale buttons for touch */
+    .control-button {
+        transform: scale(1.1);
+    }
+
+    .button-label {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .buttonbox-container {
+        padding: 0.25rem;
+    }
+
+    .button-grid {
+        min-height: auto;
+        height: auto;
+        padding-bottom: 2rem;
+    }
+
+    /* Larger touch targets on mobile */
+    .control-button {
+        transform: scale(1.2);
+    }
+
+    .button-label {
+        font-size: 1rem;
+    }
+
+    .button-keybind {
+        font-size: 0.75rem;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+
+    /* Compact mode for landscape tablets */
+    .app-header {
+        padding: 0.5rem 1rem;
+    }
+
+    .app-title {
+        font-size: 1.25rem;
+    }
+
+    .app-subtitle {
+        display: none;
+    }
+}
+
+/* Keybind Editor */
+.keybind-editor {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+.keybind-editor.active {
+    display: block;
+}
+
+.keybind-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 1rem 0;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    text-align: center;
+}

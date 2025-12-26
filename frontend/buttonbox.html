@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00ff88">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>MTEL - Button Box</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/mardon-logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="buttonbox-switches.css">
+</head>
+
+<body>
+    <!-- MTEL Header -->
+    <header class="app-header" style="position: sticky; top: 0; z-index: 100;">
+        <div class="header-branding">
+            <img src="mardon-logo.png" alt="MARDON PC Logo" class="app-logo">
+            <div>
+                <h1 class="app-title">MTEL Button Box</h1>
+                <p class="app-subtitle">Car Controls</p>
+            </div>
+        </div>
+        <div class="connection-status" id="connectionStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span class="status-text" id="statusText">Connecting...</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+            <button class="save-layout-btn" onclick="toggleFullscreen()" id="fullscreenBtn">
+                ⛶ Fullscreen
+            </button>
+            <button class="save-layout-btn" onclick="resetLayout()">🔄 Reset</button>
+            <button class="save-layout-btn" onclick="syncFromServer()">⬇ Sync</button>
+            <button class="save-layout-btn" onclick="saveLayout()">💾 Save</button>
+            <button class="edit-mode-toggle" id="editModeBtn" onclick="toggleEditMode()">
+                ✏️ Edit
+            </button>
+        </div>
+    </header>
+
+    <div class="buttonbox-container">
+        <div class="button-grid" id="buttonGrid">
+            <!-- Buttons will be dynamically created here -->
+        </div>
+    </div>
+
+    <!-- Keybind Editor Modal -->
+    <div class="keybind-editor" id="keybindEditor">
+        <h3>Edit Keybind</h3>
+        <p id="editingButtonName"></p>
+        <input type="text" class="keybind-input" id="keybindInput" placeholder="Press a key..." readonly>
+        <div style="margin-top: 1rem;">
+            <button class="export-btn" onclick="saveKeybind()">Save</button>
+            <button class="export-btn" style="background: #666;" onclick="closeKeybindEditor()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="buttonbox.js"></script>
+</body>
+
+</html>
