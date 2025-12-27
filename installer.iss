@@ -56,7 +56,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\Start-App.bat"; WorkingDir:
 
 [Run]
 ; Create .env file with correct port
-Filename: "powershell.exe"; Parameters: "-Command ""Set-Content -Path '{app}\backend\.env' -Value 'PORT=3737', 'NODE_ENV=production'"""; Flags: runhidden
+Filename: "powershell.exe"; Parameters: "-Command ""Set-Content -Path '{app}\backend\.env' -Value 'PORT=3000', 'NODE_ENV=production'"""; Flags: runhidden
 
 ; Launch Application
 Filename: "{app}\Start-App.bat"; Description: "Launch MTEL"; Flags: postinstall nowait skipifsilent

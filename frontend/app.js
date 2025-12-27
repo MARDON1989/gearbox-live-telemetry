@@ -3,8 +3,8 @@
  * Real-time telemetry dashboard with comprehensive data visualization
  */
 
-// Connect to Socket.IO server
-const socket = io(window.location.origin);
+// Connect to Socket.IO server - explicit URL for Electron compatibility
+const socket = io('http://localhost:3000');
 
 // DOM Elements
 const statusIndicator = document.getElementById('statusIndicator');
