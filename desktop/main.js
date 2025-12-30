@@ -173,9 +173,9 @@ function createWindow() {
         toggleClickThrough(state);
     });
 
-    // Register Global Shortcut
+    // Register Global Shortcut for Lock/Unlock (Ctrl+L)
     const { globalShortcut } = require('electron');
-    globalShortcut.register('CommandOrControl+Shift+L', () => {
+    globalShortcut.register('CommandOrControl+L', () => {
         toggleClickThrough();
     });
 

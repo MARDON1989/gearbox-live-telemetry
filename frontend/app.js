@@ -227,8 +227,8 @@ function resetCardPositions() {
 
 // Add reset button to header (optional - can be triggered via keyboard shortcut)
 document.addEventListener('keydown', (e) => {
-    // Ctrl+Shift+R to reset layout
-    if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+    // Keyboard shortcut: Ctrl+L to lock/unlock overlay
+    if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
         if (confirm('Reset all telemetry boxes to default positions?')) {
             resetCardPositions();
             location.reload();
