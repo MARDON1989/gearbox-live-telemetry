@@ -1,21 +1,165 @@
-MIT License
+# MTEL Software License Agreement
 
-Copyright (c) 2025 MARDON PC
+**MARDON Telemetry Enhanced (MTEL)**  
+Copyright © 2025 MARDON LLC. All Rights Reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## 1. Grant of License
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This Software License Agreement ("Agreement") is a legal agreement between you (either an individual or a single entity, "Licensee") and MARDON LLC ("Licensor") for the MARDON Telemetry Enhanced software product ("Software"), which includes computer software and may include associated media, printed materials, and online or electronic documentation.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+By installing, copying, or otherwise using the Software, you agree to be bound by the terms of this Agreement. If you do not agree to the terms of this Agreement, do not install or use the Software.
+
+## 2. License Types
+
+### 2.1 Annual Subscription License
+Subject to the terms of this Agreement and payment of applicable subscription fees, Licensor grants Licensee a non-exclusive, non-transferable, revocable license to:
+- Install and use the Software on a single computer
+- Receive software updates and technical support during the active subscription period
+- Access all features and functionality of the Software
+
+The subscription period is one (1) year from the date of purchase and must be renewed annually to maintain access.
+
+### 2.2 Beta Testing License
+Licensor may grant select individuals a temporary, non-exclusive, non-transferable, revocable license to use pre-release versions of the Software ("Beta Software") for testing and evaluation purposes only. Beta licenses:
+- Are provided at no cost at Licensor's sole discretion
+- May be revoked at any time without notice
+- Include no warranty or support obligations
+- Prohibit commercial use or redistribution
+- Expire upon release of the commercial version or at Licensor's discretion
+
+## 3. License Restrictions
+
+Licensee shall NOT:
+- Copy, modify, adapt, translate, or create derivative works of the Software
+- Reverse engineer, decompile, disassemble, or attempt to derive the source code
+- Rent, lease, loan, sell, sublicense, or transfer the Software to any third party
+- Remove, alter, or obscure any proprietary notices on the Software
+- Use the Software for any unlawful purpose
+- Share license keys or access credentials with unauthorized users
+- Use a single license on multiple computers simultaneously
+
+## 4. Intellectual Property Rights
+
+The Software is licensed, not sold. MARDON LLC retains all right, title, and interest in and to the Software, including all intellectual property rights. This Agreement does not grant Licensee any rights to trademarks, service marks, or trade names of MARDON LLC.
+
+## 5. License Key and Activation
+
+### 5.1 License Keys
+Each license is identified by a unique license key. Licensee must:
+- Keep license keys confidential and secure
+- Not share license keys with unauthorized parties
+- Notify Licensor immediately if a license key is compromised
+
+### 5.2 Activation
+The Software requires online activation using a valid license key. Activation:
+- Validates the license key with Licensor's servers
+- Verifies the subscription status
+- May be required periodically to confirm active subscription
+
+### 5.3 License Key Revocation
+Licensor reserves the right to revoke license keys if:
+- Subscription fees are not paid
+- License terms are violated
+- Fraudulent or unauthorized use is detected
+- The subscription period expires
+
+## 6. Subscription Terms
+
+### 6.1 Payment
+Annual subscription fees are due in advance. Failure to pay renewal fees will result in:
+- Termination of license
+- Loss of access to the Software
+- Deactivation of license key
+
+### 6.2 Refunds
+Subscription fees are non-refundable except as required by applicable law.
+
+### 6.3 Price Changes
+Licensor reserves the right to change subscription pricing with 30 days notice to existing subscribers.
+
+## 7. Updates and Support
+
+### 7.1 Updates
+Active subscribers receive:
+- Software updates and bug fixes
+- New features and improvements
+- Security patches
+
+### 7.2 Support
+Active subscribers receive technical support via:
+- Email support
+- Online documentation
+- Community forums
+
+Support is provided on a best-effort basis and does not guarantee specific response times.
+
+## 8. Warranty Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+MARDON LLC DOES NOT WARRANT THAT:
+- The Software will meet Licensee's requirements
+- Operation will be uninterrupted or error-free
+- Defects will be corrected
+- The Software is compatible with all hardware and software configurations
+
+## 9. Limitation of Liability
+
+IN NO EVENT SHALL MARDON LLC BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR RELATED TO THIS AGREEMENT OR USE OF THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+MARDON LLC's TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT PAID BY LICENSEE FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.
+
+## 10. Termination
+
+### 10.1 Termination by Licensee
+Licensee may terminate this Agreement at any time by:
+- Ceasing all use of the Software
+- Uninstalling the Software from all computers
+- Destroying all copies of the Software
+
+Termination does not entitle Licensee to a refund.
+
+### 10.2 Termination by Licensor
+Licensor may terminate this Agreement immediately if Licensee:
+- Breaches any term of this Agreement
+- Fails to pay subscription fees
+- Uses the Software in an unauthorized manner
+
+Upon termination, Licensee must immediately cease all use and destroy all copies of the Software.
+
+## 11. Data Collection and Privacy
+
+The Software may collect:
+- License key and activation data
+- Usage statistics and telemetry
+- Error reports and diagnostic information
+
+Data collection is subject to MARDON LLC's Privacy Policy available at [privacy policy URL].
+
+## 12. Export Compliance
+
+Licensee agrees to comply with all applicable export and import laws and regulations. Licensee shall not export or re-export the Software to any prohibited country, entity, or person.
+
+## 13. Governing Law
+
+This Agreement shall be governed by and construed in accordance with the laws of [Your State/Country], without regard to its conflict of law provisions.
+
+## 14. Entire Agreement
+
+This Agreement constitutes the entire agreement between Licensee and MARDON LLC regarding the Software and supersedes all prior agreements, understandings, and communications.
+
+## 15. Amendments
+
+MARDON LLC reserves the right to modify this Agreement at any time. Continued use of the Software after changes constitutes acceptance of the modified Agreement.
+
+## 16. Contact Information
+
+For questions about this Agreement or the Software, contact:
+
+**MARDON LLC**  
+Email: [support email]  
+Website: [website URL]
+
+---
+
+**BY INSTALLING OR USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.**
