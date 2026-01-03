@@ -244,7 +244,7 @@ io.on('connection', (socket) => {
             }
 
             // Broadcast live telemetry to all connected frontends
-            io.emit('telemetry-update', data);
+            io.emit('live-telemetry', data);
         }
     });
 
