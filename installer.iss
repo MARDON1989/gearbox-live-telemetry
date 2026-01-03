@@ -165,8 +165,25 @@ begin
         
         // Refresh environment
         Sleep(2000);
+        
+        // Install Python packages
+        Exec('cmd.exe', '/c python -m pip install --upgrade pip', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\agent') + '" && python -m pip install -r requirements.txt', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       end;
     end;
+  end;
+  
+  // Install backend dependencies
+  if CurPageID = wpInstalling then
+  begin
+    Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\backend') + '" && npm install --production', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+    Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\desktop') + '" && npm install --production', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
+  
+  // Create .env file with port configuration
+  if CurPageID = wpInstalling then
+  begin
+    SaveStringToFile(ExpandConstant('{app}\backend\.env'), 'PORT=3000' + #13#10, False);
   end;
 end;
 

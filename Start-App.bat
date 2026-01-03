@@ -6,6 +6,11 @@ echo MTEL - Mardon Telemetry Enhanced
 echo ========================================
 echo.
 
+echo Stopping any existing MTEL processes...
+call "%~dp0kill_mtel.bat" >nul 2>&1
+timeout /t 2 /nobreak >nul
+echo.
+
 :: Check for Node.js
 where node >nul 2>nul
 if %errorlevel% neq 0 (
