@@ -1,13 +1,16 @@
-"""
-MTEL - Mardon Telemetry Enhanced Agent
-Captures comprehensive telemetry data from iRacing and sends it to the central server
-"""
+import sys
+import os
+
+# Add local 'lib' directory to path for bundled dependencies
+current_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir = os.path.join(current_dir, 'lib')
+if os.path.exists(lib_dir):
+    sys.path.insert(0, lib_dir)
 
 import irsdk
 import socketio
 import time
 import socket
-import os
 from datetime import datetime
 from collections import deque
 
