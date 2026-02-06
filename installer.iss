@@ -43,6 +43,8 @@ Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "API.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".env.example"; DestDir: "{app}\backend"; Flags: ignoreversion
 Source: "Start-App.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "kill_mtel.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "post-install.bat"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: node_modules are included in backend/desktop directories above
 ; NOTE: Python packages are included in agent/lib directory above
 
@@ -55,11 +57,11 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\Start-App.bat"; WorkingDir: "{app}"; Tasks: desktopicon; IconFilename: "{app}\desktop\icon.ico"
 
 [Run]
-; Create .env file with correct port
-Filename: "powershell.exe"; Parameters: "-Command ""Set-Content -Path '{app}\backend\.env' -Value 'PORT=3000', 'NODE_ENV=production'"""; Flags: runhidden
+; Run post-install script to set up dependencies
+Filename: "{app}\post-install.bat"; Description: "Install dependencies (required)"; Flags: postinstall
 
 ; Launch Application
-Filename: "{app}\Start-App.bat"; Description: "Launch MTEL"; Flags: postinstall nowait skipifsilent
+Filename: "{app}\Start-App.bat"; Description: "Launch MTEL"; Flags: postinstall nowait skipifsilent unchecked
 
 [Code]
 var
@@ -165,25 +167,8 @@ begin
         
         // Refresh environment
         Sleep(2000);
-        
-        // Install Python packages
-        Exec('cmd.exe', '/c python -m pip install --upgrade pip', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-        Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\agent') + '" && python -m pip install -r requirements.txt', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       end;
     end;
-  end;
-  
-  // Install backend dependencies
-  if CurPageID = wpInstalling then
-  begin
-    Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\backend') + '" && npm install --production', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-    Exec('cmd.exe', '/c cd /d "' + ExpandConstant('{app}\desktop') + '" && npm install --production', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  end;
-  
-  // Create .env file with port configuration
-  if CurPageID = wpInstalling then
-  begin
-    SaveStringToFile(ExpandConstant('{app}\backend\.env'), 'PORT=3000' + #13#10, False);
   end;
 end;
 
