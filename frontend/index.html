@@ -8,6 +8,7 @@
     <meta name="description"
         content="Advanced iRacing telemetry dashboard with real-time data and historical analytics">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="license-dialog.css">
 </head>
 
 <body>
@@ -43,6 +44,16 @@
                 style="text-decoration: none; margin-right: 1rem;">
                 🎮 Button Box
             </a>
+
+            <!-- Update Status (Header) -->
+            <div class="update-status-header"
+                style="display: flex; align-items: center; gap: 0.5rem; margin-right: 1rem;">
+                <button id="updateBtn" class="export-btn"
+                    style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color);">
+                    🔄 Check Updates
+                </button>
+                <span id="updateStatus" style="font-size: 0.75rem; color: var(--text-muted);"></span>
+            </div>
 
             <!-- Window Controls (Desktop App Only) -->
             <div class="window-controls" id="windowControls" style="display: none;">
@@ -498,19 +509,17 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.75rem;">
-        <button id="updateBtn"
-            style="background: none; border: none; color: inherit; cursor: pointer; text-decoration: underline;">Check
-            for Updates</button>
-        <span id="updateStatus" style="margin-left: 0.5rem;"></span>
-    </footer>
 
     <!-- Socket.IO Client -->
     <script src="/socket.io/socket.io.js"></script>
 
     <!-- Unit Conversion Utilities -->
     <script src="units.js"></script>
+
+    <!-- License System -->
+    <script src="license-validator.js"></script>
+    <script src="license-dialog.js"></script>
+    <script src="license-init.js"></script>
 
     <!-- Main Application -->
     <script src="app.js"></script>

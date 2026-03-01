@@ -1138,11 +1138,19 @@ function updateTireMonitor(tires) {
         const tireData = tires[pos];
         if (!tireData) return;
 
+        // Debug: Log raw values periodically (throttle this in production)
+        if (Math.random() < 0.01) {
+            console.log(`[Tire Debug] ${pos} Raw Pressure: ${tireData.pressure}, Raw TempL: ${tireData.tempL}`);
+        }
+
         const pressureEl = document.getElementById(`tire${pos}Pressure`);
         const tempEl = document.getElementById(`tire${pos}Temp`);
         const wearEl = document.getElementById(`tire${pos}Wear`);
 
         if (pressureEl) {
+            // iRacing provides kPa. If isImperial is true, convert to PSI.
+            // If isImperial is false, use kPa as is.
+            // value passed to formatPressure must be in the target unit.
             const pressure = isImperial ? UnitConverter.kpaToPsi(tireData.pressure) : tireData.pressure;
             pressureEl.textContent = UnitConverter.formatPressure(pressure, isImperial);
         }
@@ -1219,6 +1227,9 @@ function initApp() {
     // Initialize Window Controls & Card Management
     initWindowControls();
     initCardManagement();
+
+    // Initialize License
+    initLicense();
 }
 
 // Window Controls & Overlay Logic
@@ -1428,3 +1439,12 @@ if (document.readyState === 'loading') {
     // DOM already loaded, run immediately
     initApp();
 }
+
+
+
+// Add initLicense to the end of initApp or call it here
+// We'll hook it into the main initApp function by replacing the previous DOMContentLoaded listener logic 
+// but since I am editing the end of the file, I will just ensure it is called.
+// Actually, let's append the call to initLicense inside initApp in a separate edit to be safe,
+// OR just add it to the existing event listener here if initApp is defined above.
+// Wait, initApp IS defined above. I should modify initApp instead.

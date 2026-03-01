@@ -238,10 +238,33 @@ h6 {
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 1rem;
+    /* Reduced padding slightly to give more room */
     position: relative;
     box-shadow: var(--shadow-md);
     transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ... existing styles ... */
+
+.card-content {
+    flex: 1;
+    overflow: hidden;
+    /* Prevent spill */
+    min-height: 0;
+    /* Crucial for flex child scroll */
+    display: flex;
+    flex-direction: column;
+}
+
+.pit-info-container {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) transparent;
 }
 
 .card.draggable {
